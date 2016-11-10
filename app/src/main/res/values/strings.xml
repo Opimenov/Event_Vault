@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="rough_spinner_options">
+        <item>Events</item>
+        <item>People</item>
+        <item>Places</item>
+    </string-array>
+
+    <string-array name="fine_spinner_options">
+        <item>By Activity</item>
+        <item>By Name</item>
+        <item>By Location</item>
+    </string-array>
+
+    <string name="app_name">EV_v2</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_text">OK</string>
+    <string name="action_login">login</string>
+
+</resources>

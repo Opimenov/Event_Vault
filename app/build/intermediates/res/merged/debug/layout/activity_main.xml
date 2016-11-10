@@ -1,0 +1,77 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="461dp"
+        android:name="com.google.android.gms.maps.MapFragment" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <Spinner
+            android:layout_height="36dp"
+            android:id="@+id/rough_spinner"
+            android:layout_width="180dp" />
+
+            <Spinner
+                android:layout_width="186dp"
+                android:layout_height="match_parent"
+                android:id="@+id/fine_spinner"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/search_button"
+                android:layout_alignRight="@+id/search_button"
+                android:layout_alignEnd="@+id/search_button"
+                android:layout_toEndOf="@+id/linearLayout"
+                android:layout_toRightOf="@+id/linearLayout" />
+        </LinearLayout>
+
+        <ImageButton
+        android:id="@+id/search_button"
+            android:layout_height="match_parent"
+        android:onClick="startSearch"
+        android:layout_gravity="right"
+        tools:src="@android:drawable/ic_menu_search"
+            android:layout_toEndOf="@+id/editText"
+            android:layout_alignTop="@+id/editText"
+            android:layout_toRightOf="@+id/editText"
+            android:layout_width="40dp" />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:hint="Search"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="325dp" />
+
+    </RelativeLayout>
+    <!--
+      map:cameraBearing="112.5"
+      map:cameraTargetLat="42.314083"
+      map:cameraTargetLng="-71.037929"
+      map:cameraTilt="30"
+      map:cameraZoom="13"
+      map:mapType="normal"
+      map:uiCompass="false"
+      map:uiRotateGestures="true"
+      map:uiScrollGestures="false"
+      map:uiTiltGestures="true"
+      map:uiZoomControls="false"
+      map:uiZoomGestures="true"/>
+    -->
+
+</LinearLayout>

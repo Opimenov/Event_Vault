@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/alpi/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
+        revision="24.0.3"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-23.1.0-56be2d5feb8870a836a193ea807b4ff5757e3999.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        revision="24.0.3"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-23.1.0-08bf3860a9bb0416dabf49be328689192828ca91.jar" />
+    </item>
+    <item
+        jar="/home/alpi/Android/Sdk/platforms/android-23/android.jar"
+        revision="24.0.3"
+        sha1="eee3e49de0e3c71c5f278ba7e4fe847483f9084c">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/android-286a0959e52d0345b7cf687b3463da550e3ce3b0.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1dc13e8c80d85af6538e3fc463cb9e7837851b2e.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-6f6ccf3a715700abba367618e99377373a3591f6.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="325788a04b436a0bccbc5b4c54cf0f12ebdcbd2d">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-be5665a9aa42c4170ec658dc38426735d14be102.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.22.0/d441fc58329c4a4c067acec04ac361627f66ecc8/google-http-client-1.22.0.jar"
+        revision="24.0.3"
+        sha1="d441fc58329c4a4c067acec04ac361627f66ecc8">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/google-http-client-1.22.0-3ad463ac9e350e2f8762e130802c868f706c7244.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-aed461978a0f2f613383cddc537a057a3f6e87e6.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sqladmin/v1beta4-rev25-1.22.0/921ac7e3458f6051a90765341fef9f6ee5ad51d/google-api-services-sqladmin-v1beta4-rev25-1.22.0.jar"
+        revision="24.0.3"
+        sha1="0921ac7e3458f6051a90765341fef9f6ee5ad51d">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/google-api-services-sqladmin-v1beta4-rev25-1.22.0-db85e13f21788a9db6e84010ed83526d52733a9f.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-018432c61f55a03f4d046d6a32086c592455e5e0.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-9d6ca4041fce697f56f8ef787a277c6737b1e3d2.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="97f3b099801a9ad9d70e835b9125273e986eb68d">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-4843aba746c51394fb30a8fa245dca361e8cc46b.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="d294caf562c4c678b2ef351662a0ca6f1a4d06c0">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-0a0544ff867c2c35dc8880222805d05d168f0e31.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.22.0/1d63f369ac78e4838a3197147012026e791008cb/google-oauth-client-1.22.0.jar"
+        revision="24.0.3"
+        sha1="1d63f369ac78e4838a3197147012026e791008cb">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/google-oauth-client-1.22.0-ca2184c995cad833068ed16e8ae3b493efaae2eb.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="82054090e487d78e163a988557db62d809fa9b95">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-9b9289473cc3286982ccff0f5bf6622ce754774f.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="2a7e47da654546f9457deb6132364f1bf33a1857">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8d8afcb75a5abe9e14b8cf17851f33b8474bd411.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="d93480da1d303122ee67dc3bc23e6297bdef9951">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ef056978e0819c6af2f675ec1a0cbc6cc9638c71.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-13ad422f3f487d944295b6ecf00c9e3e6c0530de.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-c87b4adc7f0dea99477db2362b2465e6f808d2d5.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.22.0/cc014d64ae11117e159d334c99d9c246d9b36f44/google-http-client-jackson2-1.22.0.jar"
+        revision="24.0.3"
+        sha1="cc014d64ae11117e159d334c99d9c246d9b36f44">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/google-http-client-jackson2-1.22.0-88a73177ca40970666ddfeb185b13febeb305754.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.22.0/244350c0c845c583717ade13f5666a452fd0cfa/google-api-client-1.22.0.jar"
+        revision="24.0.3"
+        sha1="0244350c0c845c583717ade13f5666a452fd0cfa">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/google-api-client-1.22.0-9223923d19ec752cbd0180a11a33a428f9d18cb8.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1afd31c858bcd4a3152437cd972c025d68cab022.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.cloud.sql/mysql-socket-factory/1.0.2/35a7903aa7ff00dc88f5f2562548e31441dc2784/mysql-socket-factory-1.0.2.jar"
+        revision="24.0.3"
+        sha1="35a7903aa7ff00dc88f5f2562548e31441dc2784">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/mysql-socket-factory-1.0.2-d2839c65ba99de70a85d40607b6832678dc97ddb.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
+        revision="24.0.3"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/jsr305-1.3.9-8730a19eaded8bb6ae853d8972a5bb38fe4c861b.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/17.0/463f8378feba44df7ba7cd9272d01837dad62b36/guava-jdk5-17.0.jar"
+        revision="24.0.3"
+        sha1="463f8378feba44df7ba7cd9272d01837dad62b36">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/guava-jdk5-17.0-18aa24e0241ad95dfe73bb15d0bb8bf233829d91.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="9cf8c0ef60847621c7ad00b4f78dbfc9daba4af2">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ce520a687b15eab47de3c3a2d85bf92d55e98b5a.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        revision="24.0.3"
+        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-22.2.0-f2e25be56f748b093258726e54f256a1ad4e2a3f.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.38/dbbd7cd309ce167ec8367de4e41c63c2c8593cc5/mysql-connector-java-5.1.38.jar"
+        revision="24.0.3"
+        sha1="dbbd7cd309ce167ec8367de4e41c63c2c8593cc5">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/mysql-connector-java-5.1.38-2a1dee3c7382b99a022f95f9af8d42dabe3aa906.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="95758a2905669affbffc5ddd262921d375674fad">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-76b73a9c8c79dffdda1dfa7dd7e7b69e758cb1d1.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="997773777cf3904c11d6764fe3b7668538220e49">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ef9cdb6cc75740a0150537a9c663bbe552971870.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="b92002cb2f0e11a226ac5bac6dff1dc2a9d0b774">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-89f88cf834175a4685484488d4d8400c56c471ac.jar" />
+    </item>
+    <item
+        jar="/home/alpi/Android/Sdk/platforms/android-23/optional/org.apache.http.legacy.jar"
+        revision="24.0.3"
+        sha1="017030d11901291abf8f83a812984276b643ea0f">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/org.apache.http.legacy-66ddd2fb881b171a9fef37dcfa45624120f5b495.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-bbc0486715022360bbe1fde30742adef1d3f3d63.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="3178362320bcf51228835b60ff978efadfd1f783">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-af5386a03f8c2e34ca95ab7a0eb24fb7ba233be1.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="482de223655d06253cc6a4955d653f8994169500">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-d52991faaffc9abe5bbb3f68e1d6fa61ed9cb373.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="041d93cf0533591c29d1d7263b2fa114dbfb20bd">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-d414c1826f61406d3df56f66ca307920b1ccedc1.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        revision="24.0.3"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/jackson-core-2.1.3-e34a0ee9b49d944b979bf5636bfea393ae906a23.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="17449c47df35c754b257532052f1270c444f7993">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-eb5b8b2b738832b2bb9b5a58a566e5f30e3a675d.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="dcb5b75baf05d92e61d5706737200ee55949f97b">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-0f3a11bc99114e9fc3677ad58a08d8c40c990345.jar" />
+    </item>
+    <item
+        jar="/home/alpi/.gradle/caches/modules-2/files-2.1/com.google.cloud.sql/mysql-socket-factory-core/1.0.2/24d4aaf9b162bf0e2e746d973dabc1fb5fd30e4a/mysql-socket-factory-core-1.0.2.jar"
+        revision="24.0.3"
+        sha1="24d4aaf9b162bf0e2e746d973dabc1fb5fd30e4a">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/mysql-socket-factory-core-1.0.2-929971a2748a3fa09774f5041001d0a7c69d0173.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="3b05c18f60969ecc2ba49c0409c4b96be2d9cb0c">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-6e8f8a3f0f0076683b9705933388de02cf831a8c.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="3aed37c38c56679602255dd72ef356da5d327cda">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-a765aa39dad8e5480fc98df2829e626602149b50.jar" />
+    </item>
+    <item
+        jar="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.1.0/jars/classes.jar"
+        revision="24.0.3"
+        sha1="e6ace071e11a5f5baf2f44246eb8ac39ce393ea0">
+        <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-72286457fb20a6af9eedcea1417d721b76e15cf5.jar" />
+    </item>
+
+</items>

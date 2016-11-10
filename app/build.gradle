@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+
+android {
+
+    compileSdkVersion 23
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        applicationId "edu.umb.cs443"
+        minSdkVersion 15
+        targetSdkVersion 23
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+}
+
+dependencies {
+    compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+}

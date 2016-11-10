@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/main.xml"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/display_message.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/display_message.xml"
+    }
+]
