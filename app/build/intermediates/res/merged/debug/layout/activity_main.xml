@@ -10,7 +10,7 @@
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="461dp"
+        android:layout_height="496dp"
         android:name="com.google.android.gms.maps.MapFragment" />
 
     <RelativeLayout
@@ -29,24 +29,20 @@
                 android:layout_width="186dp"
                 android:layout_height="match_parent"
                 android:id="@+id/fine_spinner"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/search_button"
-                android:layout_alignRight="@+id/search_button"
-                android:layout_alignEnd="@+id/search_button"
-                android:layout_toEndOf="@+id/linearLayout"
-                android:layout_toRightOf="@+id/linearLayout" />
+              />
         </LinearLayout>
 
         <ImageButton
         android:id="@+id/search_button"
-            android:layout_height="match_parent"
+        android:layout_height="match_parent"
         android:onClick="startSearch"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         tools:src="@android:drawable/ic_menu_search"
-            android:layout_toEndOf="@+id/editText"
             android:layout_alignTop="@+id/editText"
-            android:layout_toRightOf="@+id/editText"
-            android:layout_width="40dp" />
+            android:layout_width="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="search button" />
 
         <EditText
             android:layout_height="wrap_content"

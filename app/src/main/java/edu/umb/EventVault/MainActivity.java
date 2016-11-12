@@ -5,8 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +19,12 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static edu.umb.EventVault.R.id.map;
 import static edu.umb.EventVault.R.id.rough_spinner;
@@ -32,7 +36,8 @@ import static edu.umb.EventVault.R.id.rough_spinner;
  */
 
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MainActivity extends FragmentActivity implements
+        OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private EditText mEditText;   //gets user input
     private ImageButton mSearchButton;   //start the search
 	private final static String DEBUG_TAG="OP";
@@ -42,9 +47,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private String user_input; //input from the user
     private Spinner roughSpinner; //
     private Spinner fineSpinner;
-    private GoogleMap mMap;
-    private Toolbar mToolbar;
-    private AppCompatDelegate delegate;
+    public GoogleMap mMap;
+    private boolean mapIsOk = false;
+    private ConnectivityManager connMgr;
+    private NetworkInfo netInfo;
+    private ArrayList<DummyEvent>  moc_query_results = new ArrayList<>(); //testing data
+    private ArrayList<DummyEvent>  query_results = new ArrayList<>(); //real data
+    private HashMap<String,Marker> markers = new HashMap<>(); //to stores all markers created
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +63,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         /** wire the map fragment so we can use it in the code */
         MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
         mFragment.getMapAsync(this); // this is interesting
+
         mEditText = (EditText) findViewById(R.id.editText); // wire the EditText for later use
         mSearchButton = (ImageButton) findViewById(R.id.search_button); //wire search button
         roughSpinner = (Spinner) findViewById(rough_spinner);
+
         //create an array using the string array and default spinner layout
         ArrayAdapter<CharSequence> rough_adapter = ArrayAdapter
                 .createFromResource(this,R.array.rough_spinner_options,
                         android.R.layout.simple_spinner_item);
+
         //specify what layout to use when the list of choices appears
         rough_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //apply the adapter to the spinner
@@ -98,6 +111,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+        //create some dummy data for testing
+        create_testing_data();
+
+
     }
 
     //might add in the future
@@ -114,152 +131,134 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
 
     public void startSearch(View v){ // responds to user search clicks
-        String query = "";
+
         //get the input string from the user
         user_input = mEditText.getText().toString();
-        /** at this point we need to figure out what are we looking for */
-        /** using rough_spinner_position and fine_spinner_position
-         * determine what user is searching for
-         * there are 9 possible options
-         0  0 godel # :: 0
-         0  1 godel # :: 2
-         0  2 godel # :: 4
-         1  0 godel # :: 1
-         1  1 godel # :: 5
-         1  2 godel # :: 9
-         2  0 godel # :: 3
-         2  1 godel # :: 11
-         2  2 godel # :: 19
+
+        //construct DB query based on user input and current options
+        String query = createQuery(user_input);
 
 
-         */
+        //check the network and establish connection
+        if (connectionAndNetworkIsOk()) {
+            // get the data from the database here
+            //gonna need an AsyncTask for this
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            //if map is ready put markers on the map
+            Log.i(DEBUG_TAG, "map OK " + mapIsOk );
+            if( mapIsOk ) {
+                displayResultsOnMap();
+            }
+        }
+
+
+    }
+
+    /**
+     * puts markers on the map using query_results
+     * add every marker to the HashMap
+     */
+    private boolean displayResultsOnMap() {
+        for (DummyEvent de : moc_query_results) {  //<<<<<<<<<<<<<<<<<<replace with query_results
+            Log.i(DEBUG_TAG, "adding marker for "+de.toString());
+            Marker temp = mMap.addMarker( new MarkerOptions()
+                            .position(new LatLng(de.getLat(),de.getLon())));
+            markers.put(de.toString(),temp);
+        }
+        return true;
+    }
+
+    /**
+     * creates connectivity manager
+     * checks the network info
+     * returns true if connection is successful
+     */
+    private boolean connectionAndNetworkIsOk() {
+        boolean return_flag = false;
+        connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        //get network info from the connection manager
+        netInfo = connMgr.getActiveNetworkInfo();
+        //proceed only when connection is active
+
+        if (netInfo != null) {
+            Log.i(DEBUG_TAG, "connection and network info "+(netInfo != null) +
+                    " "+(netInfo.isConnected()));
+        }
+        if (netInfo != null && netInfo.isConnected()) {
+            return_flag = true;
+        } else {
+            Toast.makeText(getApplicationContext(), "no network connection",
+                    Toast.LENGTH_SHORT).show();
+        }
+        return return_flag;
+    }
+
+    /**
+     * creates necessary query
+     * takes string from the user
+     *  using rough_spinner_position and fine_spinner_position
+     * determines what user is searching for
+     * there are 9 possible options
+            0  0 godel # :: 0
+            0  1 godel # :: 2
+            0  2 godel # :: 4
+            1  0 godel # :: 1
+            1  1 godel # :: 5
+            1  2 godel # :: 9
+            2  0 godel # :: 3
+            2  1 godel # :: 11
+            2  2 godel # :: 19
+     */
+    private String createQuery(String input) {
+       String query = "";
         switch (godelNum) {
             case 0:
-            //Event by activity
+                //Event by activity
                 query = "";
                 break;
             case 2:
-            //Event by name
+                //Event by name
                 query = "";
                 break;
             case 4:
-            //Event by location
+                //Event by location
                 query = "";
                 break;
             case 1:
-            //People by activity
+                //People by activity
                 query = "";
                 break;
             case 5:
-            //People by name
+                //People by name
                 query = "";
                 break;
             case 9:
-            //People by location
+                //People by location
                 query = "";
                 break;
             case 3:
-            //Places by activity
+                //Places by activity
                 query = "";
                 break;
             case 11:
-            //Places by name
+                //Places by name
                 query = "";
                 break;
             case 19:
-            //Places by location
+                //Places by location
                 query = "";
                 break;
             default:
                 Log.i(DEBUG_TAG, "godel numbers aren't working ::");
         }
-
-        //create connection manager object
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        //get network info from the connection manager
-        NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
-        //proceed only when connection is active
-        if (netInfo != null && netInfo.isConnected()) {
-            //query the database
-
-        } else {
-            Toast.makeText(getApplicationContext(), "no network connection", Toast.LENGTH_SHORT);
-        }
+        return query;
     }
-
-
-    
-/**    private class DownloadInfoTask extends AsyncTask<String,Void, returnType> {
-        private InputStream mIS = null;
-        private JSONObject jsOb = null;
-
-
-         * 1.get an input stream
-         * 2.parse JSON to get temperature, location coordinates, and image name
-         * 3.download image
-         * 4.construct info class and return it
-
-        @Override
-        protected IM_TEMP_LOC doInBackground(String... urls) {
-            Double lat = 0.0,lng = 0.0;
-            int temp = 0;
-            String im_name;
-            Bitmap image = null;
-            try {
-                mIS = getIS(urls[0]); //get an input stream
-                jsOb = convIStoJSONObject(mIS); //convert an input stream into JSONObject Object
-            } catch (Exception e) {
-                Log.i(DEBUG_TAG, "inside DownloadInfoTask doInBackground ::"+e.toString());
-            }
-            Log.i(DEBUG_TAG, "did we get JSONOBject::"+jsOb);
-            if (jsOb != null) {
-                //parse json object and populate IM_TEMP_LOC
-                try {
-                    lat = jsOb.getJSONObject("coord").getDouble("lat");
-                    lng = jsOb.getJSONObject("coord").getDouble("lon");
-                    // "key":[ {"another_key" : "value", "some_key" : "some_value" } ]
-                    // square brackets means an array of JSON Objects, in this case there single obj
-                    im_name = jsOb.getJSONArray("weather").getJSONObject(0).getString("icon");
-                    //the unit is in Kelvin C = K - 273.15
-                    //do the floor, otherwise too many fractional digits
-                    temp = (int) Math.floor(jsOb.getJSONObject("main").getDouble("temp") - 273.15);
-                    image = downloadImage(im_name); //download the image using the name
-                } catch (JSONException e) {
-                    Log.i(DEBUG_TAG, "parsing json::"+e.toString());
-                } catch (IOException e) {
-                    Log.i(DEBUG_TAG, "downloading image::"+e.toString());
-                }
-
-            }
-            //create a wrapper class for all the info that we need
-            return new IM_TEMP_LOC(image,lat,lng,temp);
-        }
-
-        //after doInBackground finishes update UI elements
-        @Override
-        protected void onPostExecute(int r) {
-            if (result != null) {
-                //show the info on the map
-                //update camera location
-                CameraUpdate center = CameraUpdateFactory
-                        .newLatLng(new LatLng(result.getLat(),result.getLng()));
-                //do some set up here
-                CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
-                mMap.moveCamera(center);
-                mMap.animateCamera(zoom);
-            }
-        }
-    }
-*/
 
     /**
      * since we have two parameters we could use Godel numbers to get just one
@@ -271,5 +270,33 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         this.mMap=map;
+        mapIsOk = true;
     }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    /**
+     * creates 100 events with different locations and names
+     * every tenth event activity type changes
+     * so there are only 10 different activities
+     */
+    private void create_testing_data() {
+        String activity = "activity";
+        for(double i = 0; i < 100; i++) {
+            String name = "event_name";
+
+            double lat = 40.741895 + i/100;
+            double lon = -73.989308 + i/100;
+            if ( i%10 == 0) {
+                activity = "activity" + i;
+            }
+            name = name + i;
+            moc_query_results.add(new DummyEvent(activity, lat, lon, name));
+            Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
+        }
+    }
+
 }
