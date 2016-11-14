@@ -5,8 +5,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,6 +58,7 @@ public class MainActivity extends FragmentActivity implements
     private ArrayList<DummyEvent>  moc_query_results = new ArrayList<>(); //testing data
     private ArrayList<DummyEvent>  query_results = new ArrayList<>(); //real data
     private HashMap<String,Marker> markers = new HashMap<>(); //to stores all markers created
+
 
 
     @Override
@@ -109,7 +114,6 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
-
 
         //create some dummy data for testing
         create_testing_data();
@@ -170,6 +174,14 @@ public class MainActivity extends FragmentActivity implements
                             .position(new LatLng(de.getLat(),de.getLon())));
             markers.put(de.toString(),temp);
         }
+        CameraUpdate center = CameraUpdateFactory
+                .newLatLng(new LatLng(
+                        moc_query_results.get(50).getLat(),
+                        moc_query_results.get(50).getLon()));
+        //do some set up here
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
         return true;
     }
 
@@ -273,8 +285,14 @@ public class MainActivity extends FragmentActivity implements
         mapIsOk = true;
     }
 
+    /**
+     * display stats info about the marker
+     * @param marker
+     * @return boolean if there is no info associated with the marker
+     */
     @Override
     public boolean onMarkerClick(Marker marker) {
+
         return false;
     }
 
@@ -297,6 +315,13 @@ public class MainActivity extends FragmentActivity implements
             moc_query_results.add(new DummyEvent(activity, lat, lon, name));
             Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
         }
+    }
+
+    public void show_popup(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.main, popupMenu.getMenu());
+        popupMenu.show();
     }
 
 }

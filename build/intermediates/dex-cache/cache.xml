@@ -259,7 +259,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="8cb165c9f43b30ab6f69f555e0942a9a4571c21c">
+        sha1="38adece73af20f14004058a935207d46b83ac22c">
         <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_752a6cd0769422ac6c568629d0cad6438186b2bd/classes.dex" />
     </item>
     <item
@@ -295,7 +295,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="f2acba1156b47bcafa3ea74c3a3b60fa6d8449af">
+        sha1="2b9eebfeccfea3479924fca3834cb521d78f78fe">
         <dex dex="/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_7d8d870247dca99dd0b3c9bd45fda4783aad2008/classes.dex" />
     </item>
     <item
