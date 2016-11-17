@@ -116,12 +116,12 @@
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.1.0/res/drawable-xxhdpi/cast_ic_notification_2.png"
     },
     {
-        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-xxhdpi/abc_ic_ab_back_mtrl_am_alpha.png",
-        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/drawable-xxhdpi/abc_ic_ab_back_mtrl_am_alpha.png"
-    },
-    {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-xxhdpi/common_signin_btn_text_disabled_dark.9.png",
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/res/drawable-xxhdpi/common_signin_btn_text_disabled_dark.9.png"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-xxhdpi/abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/drawable-xxhdpi/abc_ic_ab_back_mtrl_am_alpha.png"
     },
     {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-xxhdpi/abc_ic_clear_mtrl_alpha.png",
