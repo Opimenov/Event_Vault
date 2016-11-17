@@ -12,5 +12,11 @@
         android:id="@+id/action_login"
         android:title="@string/action_login"
         />
+    <item
+        android:id="@+id/add_event"
+        android:title="add event"/>
+    <item
+        android:id="@+id/add_place"
+        android:title="add place"/>
 
 </menu>
