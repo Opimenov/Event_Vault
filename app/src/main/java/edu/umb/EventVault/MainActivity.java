@@ -1,9 +1,11 @@
 package edu.umb.EventVault;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -27,6 +29,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,23 +47,30 @@ import static edu.umb.EventVault.R.id.rough_spinner;
 
 
 public class MainActivity extends FragmentActivity implements
-        OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+        OnMapReadyCallback {
+    //, GoogleMap.OnMarkerClickListener add this in case we want custom marker click event
     private EditText mEditText;   //gets user input
     private ImageButton mSearchButton;   //start the search
 	private final static String DEBUG_TAG="OP";
     private int rough_spinner_position = 0;
     private int fine_spinner_position = 0;
+    private int radius = 10; //display events only this far away from the user
     private int godelNum = 0;
     private String user_input; //input from the user
     private Spinner roughSpinner; //
     private Spinner fineSpinner;
+    private Spinner milesSpinner;
     public GoogleMap mMap;
     private boolean mapIsOk = false;
     private ConnectivityManager connMgr;
     private NetworkInfo netInfo;
     private ArrayList<DummyEvent>  moc_query_results = new ArrayList<>(); //testing data
     private ArrayList<DummyEvent>  query_results = new ArrayList<>(); //real data
-    private HashMap<String,Marker> markers = new HashMap<>(); //to stores all markers created
+    private HashMap<Marker, String> markers = new HashMap<>(); //to stores all markers created
+    // database parameters added
+    private static final String url = "jdbc:mysql://85.10.205.173:3306/umboston";
+    private static final String user = "cs443";
+    private static final String pass = "cs443-2016";
 
 
 
@@ -65,6 +78,11 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //added
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         /** wire the map fragment so we can use it in the code */
         MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
         mFragment.getMapAsync(this); // this is interesting
@@ -93,6 +111,44 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+
+        milesSpinner = (Spinner) findViewById(R.id.miles_spinner);
+
+        //create an array using the string array and default spinner layout
+        ArrayAdapter<CharSequence> miles_adapter = ArrayAdapter
+                .createFromResource(this,R.array.miles_spinner_options,
+                        android.R.layout.simple_spinner_item);
+
+        //specify what layout to use when the list of choices appears
+        miles_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //apply the adapter to the spinner
+        milesSpinner.setAdapter(miles_adapter);
+        milesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                switch (pos) {
+                    case 0: {
+                        radius = 10; break;
+                    }
+                    case 1: {
+                        radius = 25; break;
+                    }
+                    case 2: {
+                        radius = 50; break;
+                    }
+                    case 3: {
+                        radius = 100; break;
+                    }
+                    default:
+                        Log.i(DEBUG_TAG, "miles spinner switch failure");
+                }
+                Log.i(DEBUG_TAG, "current radius ::" + radius);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
 
         //create an array using the string array and default spinner layout
         fineSpinner = (Spinner) findViewById(R.id.fine_spinner);
@@ -171,13 +227,15 @@ public class MainActivity extends FragmentActivity implements
         for (DummyEvent de : moc_query_results) {  //<<<<<<<<<<<<<<<<<<replace with query_results
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
             Marker temp = mMap.addMarker( new MarkerOptions()
-                            .position(new LatLng(de.getLat(),de.getLon())));
-            markers.put(de.toString(),temp);
+                            .position(new LatLng(de.getLat(),de.getLon()))
+                            .title(de.getName())
+                            .snippet(de.getActivity()));
+            markers.put(temp, de.toString());
         }
         CameraUpdate center = CameraUpdateFactory
                 .newLatLng(new LatLng(
-                        moc_query_results.get(50).getLat(),
-                        moc_query_results.get(50).getLon()));
+                        moc_query_results.get(0).getLat(),
+                        moc_query_results.get(0).getLon()));
         //do some set up here
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
         mMap.moveCamera(center);
@@ -226,6 +284,10 @@ public class MainActivity extends FragmentActivity implements
             2  0 godel # :: 3
             2  1 godel # :: 11
             2  2 godel # :: 19
+
+     /////////////
+          WE ALSO NEED TO TAKE SEARCH RADIUS INTO CONSIDERATION
+                                                    //////////////
      */
     private String createQuery(String input) {
        String query = "";
@@ -286,15 +348,17 @@ public class MainActivity extends FragmentActivity implements
     }
 
     /**
-     * display stats info about the marker
+     * display info about the marker
      * @param marker
      * @return boolean if there is no info associated with the marker
-     */
+
     @Override
     public boolean onMarkerClick(Marker marker) {
+        String info = markers.get(marker);
 
         return false;
     }
+     */
 
     /**
      * creates 100 events with different locations and names
@@ -302,7 +366,7 @@ public class MainActivity extends FragmentActivity implements
      * so there are only 10 different activities
      */
     private void create_testing_data() {
-        String activity = "activity";
+        /*String activity = "activity";
         for(double i = 0; i < 100; i++) {
             String name = "event_name";
 
@@ -314,14 +378,70 @@ public class MainActivity extends FragmentActivity implements
             name = name + i;
             moc_query_results.add(new DummyEvent(activity, lat, lon, name));
             Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
+        }*/
+
+
+        //testing the Minimum viable product
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(
+                    "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                    "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                    "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;"
+                                            );
+            String activity, name;
+            double lat, lon;
+            while(rs.next()) {
+                activity = rs.getString(1);
+                lat = rs.getDouble(2);
+                lon = rs.getDouble(3);
+                name = rs.getString(4);
+                moc_query_results.add(new DummyEvent(activity, lat, lon, name));
+                Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
+            }
+            con.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void show_popup(View view) {
+    public void show_popup(final View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.main, popupMenu.getMenu());
+        /**added
+         * Defining menu item click listener for the popup menu */
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.add_place:
+                        startAddPlace(view);
+                        return true;
+                    case R.id.add_event:
+                        startAddEvent(view);
+                        return true;
+                }
+                Toast.makeText(getBaseContext(), "You selected the action : " +
+                        item.getGroupId(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         popupMenu.show();
+    }
+
+    public void startAddPlace(View v) {
+        Intent intent = new Intent("edu.umb.EventVault.AddPlace");
+        startActivity(intent);
+    }
+
+    public void startAddEvent(View v) {
+        Intent intent = new Intent("edu.umb.EventVault.AddEvent");
+        startActivity(intent);
     }
 
 }

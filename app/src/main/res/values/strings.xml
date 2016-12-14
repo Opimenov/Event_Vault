@@ -12,6 +12,14 @@
         <item>By Location</item>
     </string-array>
 
+    <string-array name="miles_spinner_options">
+        <item>10 miles</item>
+        <item>25 miles</item>
+        <item>50 miles</item>
+        <item>100 miles</item>
+    </string-array>
+
+
     <string name="app_name">EV_v2</string>
     <string name="action_settings">Settings</string>
     <string name="button_text">OK</string>

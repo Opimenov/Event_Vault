@@ -24,13 +24,20 @@
         <Spinner
             android:layout_height="34dp"
             android:id="@+id/rough_spinner"
-            android:layout_width="180dp" />
+            android:layout_width="136dp" />
 
             <Spinner
-                android:layout_width="186dp"
+                android:layout_width="133dp"
                 android:layout_height="match_parent"
                 android:id="@+id/fine_spinner"
               />
+
+            <Spinner
+                android:contentDescription="set search radius"
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+                android:id="@+id/miles_spinner"
+                />
         </LinearLayout>
 
         <EditText
@@ -41,31 +48,33 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_width="290dip" />
+            android:layout_width="280dip" />
 
         <ImageButton
         android:id="@+id/search_button"
         android:layout_height="match_parent"
         android:onClick="startSearch"
         android:layout_gravity="end"
-        tools:src="@android:drawable/ic_search_category_default"
             android:layout_width="40dp"
             android:contentDescription="search button"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/editText"
             android:layout_toEndOf="@+id/editText"
-            android:layout_alignTop="@+id/editText" />
+            android:layout_alignTop="@+id/editText"
+            android:background="@color/common_signin_btn_dark_text_default"
+            tools:background="@color/common_signin_btn_dark_text_default"
+            android:foreground="@android:drawable/ic_search_category_default" />
 
         <ImageButton
             android:id="@+id/menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/search_button"
-            android:layout_toRightOf="@+id/search_button"
-            android:layout_toEndOf="@+id/search_button"
             android:onClick="show_popup"
             android:contentDescription="menu"
-            android:src="@drawable/ic_setting_light" />
+            android:src="@drawable/ic_setting_light"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
     <!--
