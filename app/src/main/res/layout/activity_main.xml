@@ -24,17 +24,17 @@
         <Spinner
             android:layout_height="34dp"
             android:id="@+id/rough_spinner"
-            android:layout_width="136dp" />
+            android:layout_width="wrap_content" />
 
             <Spinner
-                android:layout_width="133dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/fine_spinner"
               />
 
             <Spinner
                 android:contentDescription="set search radius"
-                android:layout_width="116dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/miles_spinner"
                 />
@@ -67,14 +67,16 @@
 
         <ImageButton
             android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="show_popup"
             android:contentDescription="menu"
             android:src="@drawable/ic_setting_light"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:background="@color/common_signin_btn_dark_text_default"
+            android:layout_alignTop="@+id/search_button"
+            android:layout_width="50dip" />
 
     </RelativeLayout>
     <!--
