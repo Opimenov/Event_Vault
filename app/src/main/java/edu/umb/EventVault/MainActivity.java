@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity implements
     private int rough_spinner_position = 0;
     private int fine_spinner_position = 0;
     private int radius = 10; //display events only this far away from the user
-    private int godelNum = 0;
+    private int godelNum = -1;
     private String user_input; //input from the user
     private Spinner roughSpinner; //
     private Spinner fineSpinner;
@@ -171,8 +171,8 @@ public class MainActivity extends FragmentActivity implements
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
-        //create some dummy data for testing
-        create_testing_data();
+        //create some dummy data for testing without connection
+        //create_testing_data();
 
 
     }
@@ -203,12 +203,11 @@ public class MainActivity extends FragmentActivity implements
         //construct DB query based on user input and current options
         String query = createQuery(user_input);
 
+        //get the date from the DB
+        query_dataBase(query);
 
         //check the network and establish connection
         if (connectionAndNetworkIsOk()) {
-            // get the data from the database here
-            //gonna need an AsyncTask for this
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             //if map is ready put markers on the map
             Log.i(DEBUG_TAG, "map OK " + mapIsOk );
             if( mapIsOk ) {
@@ -224,7 +223,7 @@ public class MainActivity extends FragmentActivity implements
      * add every marker to the HashMap
      */
     private boolean displayResultsOnMap() {
-        for (DummyEvent de : moc_query_results) {  //<<<<<<<<<<<<<<<<<<replace with query_results
+        for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
             Marker temp = mMap.addMarker( new MarkerOptions()
                             .position(new LatLng(de.getLat(),de.getLon()))
@@ -234,8 +233,12 @@ public class MainActivity extends FragmentActivity implements
         }
         CameraUpdate center = CameraUpdateFactory
                 .newLatLng(new LatLng(
-                        moc_query_results.get(0).getLat(),
-                        moc_query_results.get(0).getLon()));
+                        //center on the first marker
+                        //
+                        //should be centered on user's location
+                        //
+                        query_results.get(0).getLat(),
+                        query_results.get(0).getLon()));
         //do some set up here
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
         mMap.moveCamera(center);
@@ -290,11 +293,13 @@ public class MainActivity extends FragmentActivity implements
                                                     //////////////
      */
     private String createQuery(String input) {
-       String query = "";
+       String query;
         switch (godelNum) {
             case 0:
                 //Event by activity
-                query = "";
+                query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                        "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                        "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
                 break;
             case 2:
                 //Event by name
@@ -329,7 +334,8 @@ public class MainActivity extends FragmentActivity implements
                 query = "";
                 break;
             default:
-                Log.i(DEBUG_TAG, "godel numbers aren't working ::");
+                Log.i(DEBUG_TAG, "something went wrong in create query");
+                query = null;
         }
         return query;
     }
@@ -361,12 +367,38 @@ public class MainActivity extends FragmentActivity implements
      */
 
     /**
+     * connect to the database
+     * get the result set
+     * create testing events from the resulting set
+     */
+
+    private void query_dataBase(String query) {
+        Log.i(DEBUG_TAG, "querying database");
+        //testing the Minimum viable product
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()) {
+                query_results.add(new DummyEvent(rs.getString(1), rs.getDouble(2),
+                        rs.getDouble(3), rs.getString(4)));
+            }
+            con.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * FOR TESTING WITHOUT DB CONNECTION
      * creates 100 events with different locations and names
      * every tenth event activity type changes
      * so there are only 10 different activities
      */
     private void create_testing_data() {
-        /*String activity = "activity";
+        String activity = "activity";
         for(double i = 0; i < 100; i++) {
             String name = "event_name";
 
@@ -378,33 +410,6 @@ public class MainActivity extends FragmentActivity implements
             name = name + i;
             moc_query_results.add(new DummyEvent(activity, lat, lon, name));
             Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
-        }*/
-
-
-        //testing the Minimum viable product
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, user, pass);
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(
-                    "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                    "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                    "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;"
-                                            );
-            String activity, name;
-            double lat, lon;
-            while(rs.next()) {
-                activity = rs.getString(1);
-                lat = rs.getDouble(2);
-                lon = rs.getDouble(3);
-                name = rs.getString(4);
-                moc_query_results.add(new DummyEvent(activity, lat, lon, name));
-                Log.i(DEBUG_TAG, activity+" "+ lat+" "+lon+" "+name);
-            }
-            con.close();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -412,8 +417,9 @@ public class MainActivity extends FragmentActivity implements
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.main, popupMenu.getMenu());
-        /**added
-         * Defining menu item click listener for the popup menu */
+        /**
+         * Defining menu item click listener for the popup menu
+         * */
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
             @Override
