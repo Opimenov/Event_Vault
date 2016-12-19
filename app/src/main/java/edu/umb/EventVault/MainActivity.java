@@ -2,8 +2,12 @@ package edu.umb.EventVault;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -25,7 +29,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -35,6 +43,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import static edu.umb.EventVault.R.id.map;
 import static edu.umb.EventVault.R.id.rough_spinner;
@@ -72,11 +81,18 @@ public class MainActivity extends FragmentActivity implements
     private static final String user = "cs443";
     private static final String pass = "cs443-2016";
 
-
+    // marker clustering
+    private Bitmap greenmarkerImage, redmarkerImage;
+    private float oldZoom = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        greenmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.green_marker);
+        redmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.big_red_marker);
+
+
         setContentView(R.layout.activity_main);
         //added
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -84,7 +100,7 @@ public class MainActivity extends FragmentActivity implements
             StrictMode.setThreadPolicy(policy);
         }
         /** wire the map fragment so we can use it in the code */
-        MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
+        final MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
         mFragment.getMapAsync(this); // this is interesting
 
         mEditText = (EditText) findViewById(R.id.editText); // wire the EditText for later use
@@ -110,6 +126,10 @@ public class MainActivity extends FragmentActivity implements
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
+
+            //marker clustering
+            //mMap.OnCameraChangeListener(this);
+
         });
 
         milesSpinner = (Spinner) findViewById(R.id.miles_spinner);
@@ -225,11 +245,25 @@ public class MainActivity extends FragmentActivity implements
     private boolean displayResultsOnMap() {
         for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
-            Marker temp = mMap.addMarker( new MarkerOptions()
-                            .position(new LatLng(de.getLat(),de.getLon()))
-                            .title(de.getName())
-                            .snippet(de.getActivity()));
-            markers.put(temp, de.toString());
+            // while use random for different markers
+            Random rand = new Random();
+            int  n = rand.nextInt(50) + 1;
+            if (n % 2 == 0) {
+                Marker temp = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(de.getLat(), de.getLon()))
+                        .title(de.getName())
+                        .icon(BitmapDescriptorFactory.fromBitmap(greenmarkerImage)) //marker clustering
+                        .snippet(de.getActivity()));
+                markers.put(temp, de.toString());
+            } else {
+                Marker temp = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(de.getLat(), de.getLon()))
+                        .title(de.getName())
+                        .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage)) //marker clustering
+                        .snippet(de.getActivity()));
+                markers.put(temp, de.toString());
+            }
+
         }
         CameraUpdate center = CameraUpdateFactory
                 .newLatLng(new LatLng(
@@ -299,7 +333,7 @@ public class MainActivity extends FragmentActivity implements
             case 0:
                 //Event by activity
                 test = input.replace(" ","");
-                if (test.equals(null)){
+                if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
@@ -317,7 +351,7 @@ public class MainActivity extends FragmentActivity implements
             case 4:
                 //Event by location
                 test = input.replace(" ","");
-                if (test.equals(null)){
+                if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
@@ -343,7 +377,7 @@ public class MainActivity extends FragmentActivity implements
             case 3:
                 //Places by activity
                 test = input.replace(" ","");
-                if (test.equals(null)){
+                if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
@@ -357,7 +391,7 @@ public class MainActivity extends FragmentActivity implements
             case 11:
                 //Places by name
                 test = input.replace(" ","");
-                if (test.equals(null)){
+                if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
@@ -371,7 +405,7 @@ public class MainActivity extends FragmentActivity implements
             case 19:
                 //Places by location
                 test = input.replace(" ","");
-                if (test.equals(null)){
+                if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
@@ -518,5 +552,67 @@ public class MainActivity extends FragmentActivity implements
         Intent intent = new Intent("edu.umb.EventVault.AddActivity");
         startActivity(intent);
     }
+
+    // marker clustering
+
+    private void checkMarkers(GoogleMap map) {
+        Projection projection = map.getProjection();
+        LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+        HashMap<Marker, Point> points = new HashMap<Marker, Point>();
+        for (Marker marker : markers.keySet()) {
+            if (bounds.contains(marker.getPosition())) {
+                points.put(marker, projection.toScreenLocation(marker.getPosition()));
+                marker.setVisible(false);
+            }
+        }
+        CheckMarkersTask checkMarkersTask = new CheckMarkersTask();
+        checkMarkersTask.execute(points);
+    }
+
+
+
+    private class CheckMarkersTask extends AsyncTask<HashMap<Marker, Point>, Void, HashMap<Point, ArrayList<Marker>>> {
+
+
+        private double findDistance(float x1, float y1, float x2, float y2) {
+            return Math.sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+        }
+
+        @Override
+        protected HashMap<Point, ArrayList<Marker>> doInBackground(HashMap<Marker, Point>... params) {
+            HashMap<Point, ArrayList<Marker>> clusters = new HashMap<Point, ArrayList<Marker>>();
+            HashMap<Marker, Point> points = params[0];
+            boolean wasClustered;
+            for (Marker marker : points.keySet()) {
+                Point point = points.get(marker);
+                wasClustered = false;
+                for (Point existingPoint : clusters.keySet()) {
+                    if (findDistance(point.x, point.y, existingPoint.x, existingPoint.y) < 25) {
+                        wasClustered = true;
+                        clusters.get(existingPoint).add(marker);
+                        break;
+                    }
+                }
+                if (!wasClustered) {
+                    ArrayList<Marker> markersForPoint = new ArrayList<Marker>();
+                    markersForPoint.add(marker);
+                    clusters.put(point, markersForPoint);
+                }
+            }
+            return clusters;
+        }
+
+        @Override
+        protected void onPostExecute(HashMap<Point, ArrayList<Marker>> clusters) {
+            for (Point point : clusters.keySet()) {
+                ArrayList<Marker> markersForPoint = clusters.get(point);
+                Marker mainMarker = markersForPoint.get(0);
+                mainMarker.setTitle(Integer.toString(markersForPoint.size()));
+                mainMarker.setVisible(true);
+            }
+        }
+
+    }
+
 
 }
