@@ -45,6 +45,7 @@ public class LogIn extends Activity {
         ETuserPassword = (EditText)findViewById(R.id.userPassword);
 
         button_cancel = (Button)findViewById(R.id.cancel_button);
+        button_signUp = (Button)findViewById(R.id.sign_up_button);
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +102,7 @@ public class LogIn extends Activity {
         button_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LogIn.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent intent = new Intent("edu.umb.EventVault.AddUser");
                 startActivity(intent);
             }
         });

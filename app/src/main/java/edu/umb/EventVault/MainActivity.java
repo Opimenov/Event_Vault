@@ -294,44 +294,93 @@ public class MainActivity extends FragmentActivity implements
      */
     private String createQuery(String input) {
        String query;
+        String test;
         switch (godelNum) {
             case 0:
                 //Event by activity
-                query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                        "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                        "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                test = input.replace(" ","");
+                if (test.equals(null)){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            "WHERE a.name LIKE '%"+input+"%';";
+                }
                 break;
             case 2:
-                //Event by name
+                //Event by name --no event name only activity name
                 query = "";
                 break;
             case 4:
                 //Event by location
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals(null)){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            "WHERE p.adress LIKE '"+input+"';";
+                }
                 break;
             case 1:
-                //People by activity
+                //People by activity -- can't show on map
                 query = "";
                 break;
             case 5:
-                //People by name
+                //People by name -- can't show on map
                 query = "";
                 break;
             case 9:
-                //People by location
+                //People by location --no
                 query = "";
                 break;
             case 3:
                 //Places by activity
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals(null)){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            "WHERE a.name LIKE '%"+input+"%';";
+                }
                 break;
             case 11:
                 //Places by name
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals(null)){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            "WHERE p.name LIKE '%"+input+"%';";
+                }
                 break;
             case 19:
                 //Places by location
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals(null)){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            "WHERE p.adress LIKE '"+input+"';";
+                }
                 break;
             default:
                 Log.i(DEBUG_TAG, "something went wrong in create query");
