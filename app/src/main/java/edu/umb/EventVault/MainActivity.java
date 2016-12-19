@@ -31,7 +31,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -43,7 +42,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import static edu.umb.EventVault.R.id.map;
 import static edu.umb.EventVault.R.id.rough_spinner;
@@ -57,7 +55,8 @@ import static edu.umb.EventVault.R.id.rough_spinner;
 
 public class MainActivity extends FragmentActivity implements
         OnMapReadyCallback {
-    //, GoogleMap.OnMarkerClickListener add this in case we want custom marker click event
+    //  GoogleMap.OnMarkerClickListener add this in case we want custom marker click event\
+    private boolean loggedIN = false;
     private EditText mEditText;   //gets user input
     private ImageButton mSearchButton;   //start the search
 	private final static String DEBUG_TAG="OP";
@@ -76,12 +75,12 @@ public class MainActivity extends FragmentActivity implements
     private ArrayList<DummyEvent>  moc_query_results = new ArrayList<>(); //testing data
     private ArrayList<DummyEvent>  query_results = new ArrayList<>(); //real data
     private HashMap<Marker, String> markers = new HashMap<>(); //to stores all markers created
-    // database parameters added
+    /**  database parameters */
     private static final String url = "jdbc:mysql://85.10.205.173:3306/umboston";
     private static final String user = "cs443";
     private static final String pass = "cs443-2016";
 
-    // marker clustering
+    /** marker clustering */
     private Bitmap greenmarkerImage, redmarkerImage;
     private float oldZoom = 0;
 
@@ -89,12 +88,13 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /** custom markers for displaying on the map */
         greenmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.green_marker);
         redmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.big_red_marker);
 
 
         setContentView(R.layout.activity_main);
-        //added
+        /** compatibility issue workaround */
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -107,14 +107,14 @@ public class MainActivity extends FragmentActivity implements
         mSearchButton = (ImageButton) findViewById(R.id.search_button); //wire search button
         roughSpinner = (Spinner) findViewById(rough_spinner);
 
-        //create an array using the string array and default spinner layout
+        /** create an array using the string array and default spinner layout */
         ArrayAdapter<CharSequence> rough_adapter = ArrayAdapter
                 .createFromResource(this,R.array.rough_spinner_options,
                         android.R.layout.simple_spinner_item);
 
-        //specify what layout to use when the list of choices appears
+        /** specify what layout to use when the list of choices appears */
         rough_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //apply the adapter to the spinner
+        /** apply the adapter to the spinner */
         roughSpinner.setAdapter(rough_adapter);
         roughSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -132,18 +132,20 @@ public class MainActivity extends FragmentActivity implements
 
         });
 
+        /** radius of the search spinner */
         milesSpinner = (Spinner) findViewById(R.id.miles_spinner);
 
-        //create an array using the string array and default spinner layout
+        /** create an array using the string array and default spinner layout */
         ArrayAdapter<CharSequence> miles_adapter = ArrayAdapter
                 .createFromResource(this,R.array.miles_spinner_options,
                         android.R.layout.simple_spinner_item);
 
-        //specify what layout to use when the list of choices appears
+        /** specify what layout to use when the list of choices appears */
         miles_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //apply the adapter to the spinner
         milesSpinner.setAdapter(miles_adapter);
         milesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            /** update the radius search parameter when user picks one */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 switch (pos) {
@@ -165,21 +167,26 @@ public class MainActivity extends FragmentActivity implements
                 Log.i(DEBUG_TAG, "current radius ::" + radius);
             }
 
+            /** user didn't change the current radius -> so, do nothing */
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
 
-        //create an array using the string array and default spinner layout
+        /** create an array using the string array and default spinner layout */
         fineSpinner = (Spinner) findViewById(R.id.fine_spinner);
         ArrayAdapter<CharSequence> fine_adapter = ArrayAdapter
                 .createFromResource(this,R.array.fine_spinner_options,
                         android.R.layout.simple_spinner_item);
-        //specify what layout to use when the list of choices appears
+
+        /** specify what layout to use when the list of choices appears */
         fine_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //apply the adapter to the spinner
+        /** apply the adapter to the spinner */
         fineSpinner.setAdapter(fine_adapter);
         fineSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            /** calculate unique number based on two searching options that currently selected */
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 fine_spinner_position = i;
@@ -191,10 +198,8 @@ public class MainActivity extends FragmentActivity implements
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
-        //create some dummy data for testing without connection
-        //create_testing_data();
-
-
+        /** create some dummy data for testing without connection */
+        //create_testing_data(); //uncomment for testing without inet connection
     }
 
     //might add in the future
@@ -214,47 +219,46 @@ public class MainActivity extends FragmentActivity implements
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
+    /** responds to user search button clicks */
+    public void startSearch(View v){
 
-    public void startSearch(View v){ // responds to user search clicks
-
-
-        //get the input string from the user
+        /* get the input string from the user */
         user_input = mEditText.getText().toString();
 
-        //construct DB query based on user input and current options
+        /** construct DB query based on user input and current options */
         String query = createQuery(user_input);
 
-        //get the date from the DB
-        query_dataBase(query);
+        /** get the date from the DB */
+        if (query != "" && query != " " && query != null)
+            query_dataBase(query);
 
-        //check the network and establish connection
+        /** check the network and establish connection */
         if (connectionAndNetworkIsOk()) {
-            //if map is ready put markers on the map
+
+            /**if map is ready put markers on the map */
             Log.i(DEBUG_TAG, "map OK " + mapIsOk );
             if( mapIsOk ) {
-
                 displayResultsOnMap();
             }
         }
-
-
     }
 
     /**
      * puts markers on the map using query_results
-     * add every marker to the HashMap
+     * adds every marker to the HashMap to keep track of what
+     * marker needs to be visible
      */
     private boolean displayResultsOnMap() {
         mMap.clear(); // to clear map from previous markers
         for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
 
-                Marker temp = mMap.addMarker(new MarkerOptions()
+            Marker temp = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(de.getLat(), de.getLon()))
                         .title(de.getName())
                         .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage)) //marker clustering
                         .snippet(de.getActivity()));
-                markers.put(temp, de.toString());
+            markers.put(temp, de.toString());
 
         }
         CameraUpdate center = CameraUpdateFactory
@@ -339,6 +343,8 @@ public class MainActivity extends FragmentActivity implements
             case 2:
                 //Event by name --no event name only activity name
                 query = "";
+                Toast.makeText(getBaseContext(), "current search option is not yet supported",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case 4:
                 //Event by location
@@ -357,6 +363,8 @@ public class MainActivity extends FragmentActivity implements
             case 1:
                 //People by activity -- can't show on map
                 query = "";
+                Toast.makeText(getBaseContext(), "current search option is not yet supported",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case 5:
                 //People by name -- which places user attends
@@ -375,6 +383,8 @@ public class MainActivity extends FragmentActivity implements
             case 9:
                 //People by location -- can't display people on map
                 query = "";
+                Toast.makeText(getBaseContext(), "current search option is not yet supported",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 //Places by activity create new table places_activities
@@ -385,6 +395,8 @@ public class MainActivity extends FragmentActivity implements
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
                 } else {
                     query = "";
+                    Toast.makeText(getBaseContext(), "current search option is not yet supported",
+                            Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 11:
@@ -432,19 +444,6 @@ public class MainActivity extends FragmentActivity implements
     }
 
     /**
-     * display info about the marker
-     * @param marker
-     * @return boolean if there is no info associated with the marker
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        String info = markers.get(marker);
-
-        return false;
-    }
-     */
-
-    /**
      * connect to the database
      * get the result set
      * create testing events from the resulting set
@@ -458,13 +457,13 @@ public class MainActivity extends FragmentActivity implements
             Connection con = DriverManager.getConnection(url, user, pass);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
-            while(rs.next()) {
+            while (rs.next()) {
                 query_results.add(new DummyEvent(rs.getString(1), rs.getDouble(2),
                         rs.getDouble(3), rs.getString(4)));
             }
             con.close();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
+            Log.i(DEBUG_TAG, "DB query failed");
             e.printStackTrace();
         }
     }
@@ -491,10 +490,19 @@ public class MainActivity extends FragmentActivity implements
         }
     }
 
+    /**
+     * shows the simple menu. Uses 2 different layouts depending on if user is logged in or not
+     * @param view
+     */
     public void show_popup(final View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.main, popupMenu.getMenu());
+
+        if (loggedIN)
+            inflater.inflate(R.menu.main_logged_in, popupMenu.getMenu());
+        else
+            inflater.inflate(R.menu.main_logged_off, popupMenu.getMenu());
+
         /**
          * Defining menu item click listener for the popup menu
          * */
@@ -516,8 +524,8 @@ public class MainActivity extends FragmentActivity implements
                         startLogIn(view);
                         return true;
                 }
-                Toast.makeText(getBaseContext(), "You selected the action : " +
-                        item.getGroupId(), Toast.LENGTH_SHORT).show();
+                Log.i(DEBUG_TAG, "You selected the action : " +
+                        item.getGroupId());
                 return true;
             }
         });

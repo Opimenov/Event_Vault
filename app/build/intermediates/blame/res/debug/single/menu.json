@@ -1,10 +1,18 @@
 [
     {
-        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/main.xml",
-        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/main.xml"
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/main_logged_off.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/main_logged_off.xml"
     },
     {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/display_message.xml",
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/display_message.xml"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/login.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/login.xml"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/menu/main_logged_in.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/menu/main_logged_in.xml"
     }
 ]

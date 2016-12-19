@@ -63,6 +63,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="edu.umb.EventVault.AddActivity" >
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.AddActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="edu.umb.EventVault.LogIn" >
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.LogIn" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="edu.umb.EventVault.AddUser" >
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.AddUser" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="com.google.android.gms.measurement.AppMeasurementContentProvider"

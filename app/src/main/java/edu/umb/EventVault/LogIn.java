@@ -88,7 +88,7 @@ public class LogIn extends Activity {
             }
         });
 
-        // Cancel button returns to main activity
+        // Cancel button returns to main_logged_in activity
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

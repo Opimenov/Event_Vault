@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:2:1-55:12
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:2:1-76:12
 	package
 		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:3:5-33
 		INJECTED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml
@@ -56,7 +56,7 @@ MERGED from [com.google.android.gms:play-services-maps:8.1.0] /home/alpi/Android
 	android:required
 		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:15:9-32
 application
-ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:17:5-53:19
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:17:5-74:19
 MERGED from [com.google.android.gms:play-services:8.1.0] /home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.1.0/AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-appinvite:8.1.0] /home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.1.0/AndroidManifest.xml:20:5-20
 MERGED from [com.google.android.gms:play-services-appstate:8.1.0] /home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/8.1.0/AndroidManifest.xml:19:5-20
@@ -143,6 +143,36 @@ action#edu.umb.EventVault.AddEvent
 ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:48:17-70
 	android:name
 		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:48:25-67
+activity#edu.umb.EventVault.AddActivity
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:53:9-59:20
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:53:19-46
+intent-filter#android.intent.category.DEFAULT+edu.umb.EventVault.AddActivity
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:54:13-58:29
+action#edu.umb.EventVault.AddActivity
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:55:17-73
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:55:25-70
+activity#edu.umb.EventVault.LogIn
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:60:9-66:20
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:60:19-40
+intent-filter#android.intent.category.DEFAULT+edu.umb.EventVault.LogIn
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:61:13-65:29
+action#edu.umb.EventVault.LogIn
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:62:17-67
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:62:25-64
+activity#edu.umb.EventVault.AddUser
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:67:9-73:20
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:67:19-42
+intent-filter#android.intent.category.DEFAULT+edu.umb.EventVault.AddUser
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:68:13-72:29
+action#edu.umb.EventVault.AddUser
+ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:69:17-69
+	android:name
+		ADDED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:69:25-66
 uses-sdk
 INJECTED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.google.android.gms:play-services:8.1.0] /home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.1.0/AndroidManifest.xml:18:5-42
@@ -237,4 +267,4 @@ ADDED from [com.google.android.gms:play-services-wallet:8.1.0] /home/alpi/Androi
 	android:name
 		ADDED from [com.google.android.gms:play-services-wallet:8.1.0] /home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.1.0/AndroidManifest.xml:22:22-71
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-IMPLIED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:2:1-55:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
+IMPLIED from /home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/AndroidManifest.xml:2:1-76:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE

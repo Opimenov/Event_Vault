@@ -220,6 +220,10 @@
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/drawable-hdpi/ic_launcher.png"
     },
     {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-hdpi/big_red_marker.png",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/drawable-hdpi/big_red_marker.png"
+    },
+    {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-hdpi/common_signin_btn_text_pressed_light.9.png",
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/res/drawable-hdpi/common_signin_btn_text_pressed_light.9.png"
     },
@@ -350,6 +354,10 @@
     {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-hdpi/common_signin_btn_icon_disabled_focus_dark.9.png",
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-hdpi/green_marker.png",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/drawable-hdpi/green_marker.png"
     },
     {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/drawable-hdpi/common_signin_btn_text_disabled_dark.9.png",
