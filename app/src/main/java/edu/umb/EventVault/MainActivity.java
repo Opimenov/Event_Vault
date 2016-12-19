@@ -434,6 +434,9 @@ public class MainActivity extends FragmentActivity implements
                     case R.id.add_activity:
                         startAddActivity(view);
                         return true;
+                    case R.id.action_login:
+                        startLogIn(view);
+                        return true;
                 }
                 Toast.makeText(getBaseContext(), "You selected the action : " +
                         item.getGroupId(), Toast.LENGTH_SHORT).show();
@@ -441,6 +444,12 @@ public class MainActivity extends FragmentActivity implements
             }
         });
         popupMenu.show();
+    }
+
+    // start new activity to log in
+    public void startLogIn(View v) {
+        Intent intent = new Intent("edu.umb.EventVault.LogIn");
+        startActivity(intent);
     }
 
     // start new activity to add new place
