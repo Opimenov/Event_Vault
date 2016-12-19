@@ -98,7 +98,7 @@ public class LogIn extends Activity {
         });
 
         // SignUp button creates new activity to create user
-        button_cancel.setOnClickListener(new View.OnClickListener() {
+        button_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LogIn.this, MainActivity.class);
