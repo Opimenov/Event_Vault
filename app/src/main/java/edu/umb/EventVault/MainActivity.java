@@ -217,6 +217,7 @@ public class MainActivity extends FragmentActivity implements
 
     public void startSearch(View v){ // responds to user search clicks
 
+
         //get the input string from the user
         user_input = mEditText.getText().toString();
 
@@ -231,6 +232,7 @@ public class MainActivity extends FragmentActivity implements
             //if map is ready put markers on the map
             Log.i(DEBUG_TAG, "map OK " + mapIsOk );
             if( mapIsOk ) {
+
                 displayResultsOnMap();
             }
         }
@@ -243,26 +245,16 @@ public class MainActivity extends FragmentActivity implements
      * add every marker to the HashMap
      */
     private boolean displayResultsOnMap() {
+        mMap.clear(); // to clear map from previous markers
         for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
-            // while use random for different markers
-            Random rand = new Random();
-            int  n = rand.nextInt(50) + 1;
-            if (n % 2 == 0) {
-                Marker temp = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(de.getLat(), de.getLon()))
-                        .title(de.getName())
-                        .icon(BitmapDescriptorFactory.fromBitmap(greenmarkerImage)) //marker clustering
-                        .snippet(de.getActivity()));
-                markers.put(temp, de.toString());
-            } else {
+
                 Marker temp = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(de.getLat(), de.getLon()))
                         .title(de.getName())
                         .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage)) //marker clustering
                         .snippet(de.getActivity()));
                 markers.put(temp, de.toString());
-            }
 
         }
         CameraUpdate center = CameraUpdateFactory
@@ -341,7 +333,7 @@ public class MainActivity extends FragmentActivity implements
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
-                            "WHERE a.name LIKE '%"+input+"%';";
+                            " WHERE a.name LIKE '%"+input+"%';";
                 }
                 break;
             case 2:
@@ -359,7 +351,7 @@ public class MainActivity extends FragmentActivity implements
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
-                            "WHERE p.adress LIKE '"+input+"';";
+                            " WHERE p.adress LIKE '"+input+"';";
                 }
                 break;
             case 1:
@@ -367,53 +359,56 @@ public class MainActivity extends FragmentActivity implements
                 query = "";
                 break;
             case 5:
-                //People by name -- can't show on map
-                query = "";
+                //People by name -- which places user attends
+                test = input.replace(" ","");
+                if (test.equals("")){ // if there's no user name in the input, then return all places
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            "FROM  `umboston`.places p";
+                } else {
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            "FROM  `umboston`.places p " +
+                            "WHERE p.id IN " +
+                            "(SELECT pid FROM users_places " +
+                            " WHERE uid = (SELECT id FROM users WHERE name = '"+input+"'))";
+                }
                 break;
             case 9:
-                //People by location --no
+                //People by location -- can't display people on map
                 query = "";
                 break;
             case 3:
-                //Places by activity
+                //Places by activity create new table places_activities
                 test = input.replace(" ","");
                 if (test.equals("")){
                     query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
                             "(`umboston`.events e left JOIN `umboston`.places p ON " +
                             "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
                 } else {
-                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
-                            "WHERE a.name LIKE '%"+input+"%';";
+                    query = "";
                 }
                 break;
             case 11:
                 //Places by name
                 test = input.replace(" ","");
                 if (test.equals("")){
-                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name \n" +
+                            "FROM `umboston`.places p;";
                 } else {
-                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
-                            "WHERE p.name LIKE '%"+input+"%';";
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name \n" +
+                            "FROM `umboston`.places p" +
+                            " WHERE p.name LIKE  '%"+input+"%';";
                 }
                 break;
             case 19:
                 //Places by location
                 test = input.replace(" ","");
                 if (test.equals("")){
-                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            " FROM `umboston`.places p;";
                 } else {
-                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
-                            "WHERE p.adress LIKE '"+input+"';";
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            " FROM `umboston`.places p" +
+                            " WHERE p.adress LIKE '"+input+"';";
                 }
                 break;
             default:
