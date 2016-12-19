@@ -34,29 +34,6 @@
                 android:textSize="24sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:weightSum="1"
-            android:layout_weight="0.08">
-
-            <TextView
-                android:text="Name"
-                android:layout_width="wrap_content"
-                android:id="@+id/textView2"
-                android:layout_height="30dp"
-                android:layout_weight="0.32" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:ems="10"
-                android:id="@+id/eventName"
-                android:layout_weight="1" />
-        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -65,21 +42,18 @@
             android:weightSum="1"
             android:layout_weight="0.07">
 
-            <TextView
-                android:text="Place"
-                android:layout_width="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_height="30dp"
-                android:layout_weight="0.36" />
-
-            <EditText
-                android:layout_width="wrap_content"
+            <Button
+                android:layout_width="234dp"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
-                android:text="Place"
+                android:text="Set date"
+                android:onClick="setDate"
                 android:ems="10"
-                android:id="@+id/placeAdress"
-                android:layout_weight="1" />
+                android:gravity="center"
+                android:textSize="24sp"
+                android:id="@+id/eventDate"
+                android:layout_weight="0.74"
+                android:background="?android:attr/windowBackground" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,19 +65,35 @@
 
             <TextView
                 android:text="Date"
-                android:layout_width="wrap_content"
-                android:id="@+id/textView4"
-                android:layout_height="30dp"
-                android:layout_weight="0.41" />
+                android:layout_width="303dp"
+                android:id="@+id/textEventDate"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_weight="1.36" />
 
-            <EditText
-                android:layout_width="wrap_content"
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:weightSum="1"
+            android:layout_weight="0.07">
+
+            <Button
+                android:layout_width="234dp"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
-                android:text="Date"
+                android:text="Set time"
+                android:onClick="setTime"
                 android:ems="10"
-                android:id="@+id/placeCity"
-                android:layout_weight="0.84" />
+                android:gravity="center"
+                android:textSize="24sp"
+                android:id="@+id/eventTime"
+                android:layout_weight="0.71"
+                android:background="?android:attr/windowBackground" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,26 +105,56 @@
 
             <TextView
                 android:text="Time"
-                android:layout_width="wrap_content"
-                android:id="@+id/textView5"
-                android:layout_height="30dp"
-                android:layout_weight="0.36" />
-
-            <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="303dp"
+                android:id="@+id/textEventTime"
                 android:layout_height="match_parent"
-                android:inputType="textPersonName"
-                android:text="Time"
-                android:ems="10"
-                android:id="@+id/placeState"
-                android:layout_weight="1" />
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_weight="1.36" />
+
+
         </LinearLayout>
+
+        <Button
+            android:text="Select Place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_places_button"
+            android:onClick="showPlacesDialog"/>
+
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:id="@+id/textPlace"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:layout_weight="0.27" />
+
+            <Button
+                android:text="Select Activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/get_activities_button"
+                android:onClick="showActivitiesDialog"/>
+
+            <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:id="@+id/textActivity"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_weight="0.27" />
+
+
 
         <Button
             android:text="Add event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/add_event_button"/>
+
 
     </LinearLayout>
 

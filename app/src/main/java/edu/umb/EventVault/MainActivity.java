@@ -2,8 +2,12 @@ package edu.umb.EventVault;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -25,7 +29,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -35,6 +43,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import static edu.umb.EventVault.R.id.map;
 import static edu.umb.EventVault.R.id.rough_spinner;
@@ -72,11 +81,18 @@ public class MainActivity extends FragmentActivity implements
     private static final String user = "cs443";
     private static final String pass = "cs443-2016";
 
-
+    // marker clustering
+    private Bitmap greenmarkerImage, redmarkerImage;
+    private float oldZoom = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        greenmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.green_marker);
+        redmarkerImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.big_red_marker);
+
+
         setContentView(R.layout.activity_main);
         //added
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -84,7 +100,7 @@ public class MainActivity extends FragmentActivity implements
             StrictMode.setThreadPolicy(policy);
         }
         /** wire the map fragment so we can use it in the code */
-        MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
+        final MapFragment mFragment=((MapFragment) getFragmentManager().findFragmentById(map));
         mFragment.getMapAsync(this); // this is interesting
 
         mEditText = (EditText) findViewById(R.id.editText); // wire the EditText for later use
@@ -110,6 +126,10 @@ public class MainActivity extends FragmentActivity implements
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
+
+            //marker clustering
+            //mMap.OnCameraChangeListener(this);
+
         });
 
         milesSpinner = (Spinner) findViewById(R.id.miles_spinner);
@@ -197,6 +217,7 @@ public class MainActivity extends FragmentActivity implements
 
     public void startSearch(View v){ // responds to user search clicks
 
+
         //get the input string from the user
         user_input = mEditText.getText().toString();
 
@@ -211,6 +232,7 @@ public class MainActivity extends FragmentActivity implements
             //if map is ready put markers on the map
             Log.i(DEBUG_TAG, "map OK " + mapIsOk );
             if( mapIsOk ) {
+
                 displayResultsOnMap();
             }
         }
@@ -223,13 +245,17 @@ public class MainActivity extends FragmentActivity implements
      * add every marker to the HashMap
      */
     private boolean displayResultsOnMap() {
+        mMap.clear(); // to clear map from previous markers
         for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
             Log.i(DEBUG_TAG, "adding marker for "+de.toString());
-            Marker temp = mMap.addMarker( new MarkerOptions()
-                            .position(new LatLng(de.getLat(),de.getLon()))
-                            .title(de.getName())
-                            .snippet(de.getActivity()));
-            markers.put(temp, de.toString());
+
+                Marker temp = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(de.getLat(), de.getLon()))
+                        .title(de.getName())
+                        .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage)) //marker clustering
+                        .snippet(de.getActivity()));
+                markers.put(temp, de.toString());
+
         }
         CameraUpdate center = CameraUpdateFactory
                 .newLatLng(new LatLng(
@@ -294,44 +320,96 @@ public class MainActivity extends FragmentActivity implements
      */
     private String createQuery(String input) {
        String query;
+        String test;
         switch (godelNum) {
             case 0:
                 //Event by activity
-                query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
-                        "(`umboston`.events e left JOIN `umboston`.places p ON " +
-                        "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                test = input.replace(" ","");
+                if (test.equals("")){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            " WHERE a.name LIKE '%"+input+"%';";
+                }
                 break;
             case 2:
-                //Event by name
+                //Event by name --no event name only activity name
                 query = "";
                 break;
             case 4:
                 //Event by location
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals("")){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id" +
+                            " WHERE p.adress LIKE '"+input+"';";
+                }
                 break;
             case 1:
-                //People by activity
+                //People by activity -- can't show on map
                 query = "";
                 break;
             case 5:
-                //People by name
-                query = "";
+                //People by name -- which places user attends
+                test = input.replace(" ","");
+                if (test.equals("")){ // if there's no user name in the input, then return all places
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            "FROM  `umboston`.places p";
+                } else {
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            "FROM  `umboston`.places p " +
+                            "WHERE p.id IN " +
+                            "(SELECT pid FROM users_places " +
+                            " WHERE uid = (SELECT id FROM users WHERE name = '"+input+"'))";
+                }
                 break;
             case 9:
-                //People by location
+                //People by location -- can't display people on map
                 query = "";
                 break;
             case 3:
-                //Places by activity
-                query = "";
+                //Places by activity create new table places_activities
+                test = input.replace(" ","");
+                if (test.equals("")){
+                    query = "SELECT distinct a.name, p.lat, p.lon, p.name FROM " +
+                            "(`umboston`.events e left JOIN `umboston`.places p ON " +
+                            "e.pid=p.id) left Join `umboston`.activities a on e.aid=a.id;";
+                } else {
+                    query = "";
+                }
                 break;
             case 11:
                 //Places by name
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals("")){
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name \n" +
+                            "FROM `umboston`.places p;";
+                } else {
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name \n" +
+                            "FROM `umboston`.places p" +
+                            " WHERE p.name LIKE  '%"+input+"%';";
+                }
                 break;
             case 19:
                 //Places by location
-                query = "";
+                test = input.replace(" ","");
+                if (test.equals("")){
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            " FROM `umboston`.places p;";
+                } else {
+                    query = "SELECT distinct 0, p.lat, p.lon, p.name " +
+                            " FROM `umboston`.places p" +
+                            " WHERE p.adress LIKE '"+input+"';";
+                }
                 break;
             default:
                 Log.i(DEBUG_TAG, "something went wrong in create query");
@@ -431,6 +509,12 @@ public class MainActivity extends FragmentActivity implements
                     case R.id.add_event:
                         startAddEvent(view);
                         return true;
+                    case R.id.add_activity:
+                        startAddActivity(view);
+                        return true;
+                    case R.id.action_login:
+                        startLogIn(view);
+                        return true;
                 }
                 Toast.makeText(getBaseContext(), "You selected the action : " +
                         item.getGroupId(), Toast.LENGTH_SHORT).show();
@@ -440,14 +524,90 @@ public class MainActivity extends FragmentActivity implements
         popupMenu.show();
     }
 
+    // start new activity to log in
+    public void startLogIn(View v) {
+        Intent intent = new Intent("edu.umb.EventVault.LogIn");
+        startActivity(intent);
+    }
+
+    // start new activity to add new place
     public void startAddPlace(View v) {
         Intent intent = new Intent("edu.umb.EventVault.AddPlace");
         startActivity(intent);
     }
 
+    // start new activity to add new event
     public void startAddEvent(View v) {
         Intent intent = new Intent("edu.umb.EventVault.AddEvent");
         startActivity(intent);
     }
+
+    // start new activity to add new activity
+    public void startAddActivity(View v) {
+        Intent intent = new Intent("edu.umb.EventVault.AddActivity");
+        startActivity(intent);
+    }
+
+    // marker clustering
+
+    private void checkMarkers(GoogleMap map) {
+        Projection projection = map.getProjection();
+        LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+        HashMap<Marker, Point> points = new HashMap<Marker, Point>();
+        for (Marker marker : markers.keySet()) {
+            if (bounds.contains(marker.getPosition())) {
+                points.put(marker, projection.toScreenLocation(marker.getPosition()));
+                marker.setVisible(false);
+            }
+        }
+        CheckMarkersTask checkMarkersTask = new CheckMarkersTask();
+        checkMarkersTask.execute(points);
+    }
+
+
+
+    private class CheckMarkersTask extends AsyncTask<HashMap<Marker, Point>, Void, HashMap<Point, ArrayList<Marker>>> {
+
+
+        private double findDistance(float x1, float y1, float x2, float y2) {
+            return Math.sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+        }
+
+        @Override
+        protected HashMap<Point, ArrayList<Marker>> doInBackground(HashMap<Marker, Point>... params) {
+            HashMap<Point, ArrayList<Marker>> clusters = new HashMap<Point, ArrayList<Marker>>();
+            HashMap<Marker, Point> points = params[0];
+            boolean wasClustered;
+            for (Marker marker : points.keySet()) {
+                Point point = points.get(marker);
+                wasClustered = false;
+                for (Point existingPoint : clusters.keySet()) {
+                    if (findDistance(point.x, point.y, existingPoint.x, existingPoint.y) < 25) {
+                        wasClustered = true;
+                        clusters.get(existingPoint).add(marker);
+                        break;
+                    }
+                }
+                if (!wasClustered) {
+                    ArrayList<Marker> markersForPoint = new ArrayList<Marker>();
+                    markersForPoint.add(marker);
+                    clusters.put(point, markersForPoint);
+                }
+            }
+            return clusters;
+        }
+
+        @Override
+        protected void onPostExecute(HashMap<Point, ArrayList<Marker>> clusters) {
+            for (Point point : clusters.keySet()) {
+                ArrayList<Marker> markersForPoint = clusters.get(point);
+                Marker mainMarker = markersForPoint.get(0);
+                mainMarker.setTitle(Integer.toString(markersForPoint.size()));
+                mainMarker.setVisible(true);
+            }
+        }
+
+    }
+
 
 }

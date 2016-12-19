@@ -3,24 +3,19 @@ package edu.umb.EventVault;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +25,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +32,7 @@ import java.util.Locale;
 
 public class AddPlace extends AppCompatActivity {
 
-    public final static String DEBUG_TAG="edu.umb.cs443.MYMSG";
+    public final static String DEBUG_TAG="edu.umb.EV.MYMSG";
     private String stringUrl ="https://maps.google.com/maps/api/geocode/json?address=";
     private String ending = "&sensor=false";
 
@@ -49,7 +43,7 @@ public class AddPlace extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_add_place);
 
         EditText name = (EditText) findViewById(R.id.placeName);
         EditText adress = (EditText) findViewById(R.id.placeAdress);
@@ -103,7 +97,7 @@ public class AddPlace extends AppCompatActivity {
                     Connection con = DriverManager.getConnection(url, user, pass);
                     Statement st = con.createStatement();
                     String insert = "INSERT INTO `umboston`.places (name,adress,lat,lon) VALUES ('"+inputname+"','"+ result.get(0).getAddressLine(0)
-                                            +"',"+ result.get(0).getLatitude() +","+ result.get(0).getLongitude()+")";
+                            +"',"+ result.get(0).getLatitude() +","+ result.get(0).getLongitude()+")";
                     Log.i(DEBUG_TAG, "Insert line: " + insert);
                     st.executeUpdate(insert);
 
@@ -164,5 +158,4 @@ public class AddPlace extends AppCompatActivity {
 
         return null;
     }
-
 }

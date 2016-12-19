@@ -50,6 +50,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddActivity">
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.AddActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LogIn">
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.LogIn" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AddUser">
+            <intent-filter>
+                <action android:name="edu.umb.EventVault.AddUser" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
