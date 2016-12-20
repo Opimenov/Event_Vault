@@ -136,12 +136,12 @@
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_expanded_menu_layout.xml"
     },
     {
-        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
-        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_action_menu_layout.xml"
-    },
-    {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/layout/list_item.xml",
         "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/src/main/res/layout/list_item.xml"
+    },
+    {
+        "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_action_menu_layout.xml"
     },
     {
         "merged": "/home/alpi/AndroidStudioProjects/EventVault_v2/app/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",

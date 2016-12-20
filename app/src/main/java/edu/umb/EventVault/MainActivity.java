@@ -250,30 +250,40 @@ public class MainActivity extends FragmentActivity implements
      */
     private boolean displayResultsOnMap() {
         mMap.clear(); // to clear map from previous markers
-        for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
-            Log.i(DEBUG_TAG, "adding marker for "+de.toString());
+        if (!query_results.isEmpty()) {
+            for (DummyEvent de : query_results) {  //use moc_query_results for testing without DB
+                Log.i(DEBUG_TAG, "adding marker for " + de.toString());
 
-            Marker temp = mMap.addMarker(new MarkerOptions()
+                Marker temp = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(de.getLat(), de.getLon()))
                         .title(de.getName())
-                        .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage)) //marker clustering
+                        .icon(BitmapDescriptorFactory.fromBitmap(redmarkerImage))//marker clustering
                         .snippet(de.getActivity()));
-            markers.put(temp, de.toString());
+                markers.put(temp, de.toString());
 
+            }
+            CameraUpdate center = CameraUpdateFactory
+                    .newLatLng(new LatLng(
+                            //center on the first marker
+                            //
+                            //should be centered on user's location
+                            //
+                            query_results.get(0).getLat(),
+                            query_results.get(0).getLon()));
+            //do some set up here
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
+            mMap.moveCamera(center);
+            mMap.animateCamera(zoom);
+
+            /** at this point we need to delete all search results */
+            query_results.clear();
+            return true;
         }
-        CameraUpdate center = CameraUpdateFactory
-                .newLatLng(new LatLng(
-                        //center on the first marker
-                        //
-                        //should be centered on user's location
-                        //
-                        query_results.get(0).getLat(),
-                        query_results.get(0).getLon()));
-        //do some set up here
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
-        return true;
+        else {
+            Toast.makeText(getBaseContext(), "search resulted in nothing :/",
+                    Toast.LENGTH_LONG).show();
+        }
+            return false;
     }
 
     /**
@@ -369,7 +379,8 @@ public class MainActivity extends FragmentActivity implements
             case 5:
                 //People by name -- which places user attends
                 test = input.replace(" ","");
-                if (test.equals("")){ // if there's no user name in the input, then return all places
+                // if there's no user name in the input, then return all places
+                if (test.equals("")){
                     query = "SELECT distinct 0, p.lat, p.lon, p.name " +
                             "FROM  `umboston`.places p";
                 } else {
@@ -521,6 +532,7 @@ public class MainActivity extends FragmentActivity implements
                         startAddActivity(view);
                         return true;
                     case R.id.action_login:
+                        loggedIN = true;
                         startLogIn(view);
                         return true;
                 }
@@ -574,7 +586,8 @@ public class MainActivity extends FragmentActivity implements
 
 
 
-    private class CheckMarkersTask extends AsyncTask<HashMap<Marker, Point>, Void, HashMap<Point, ArrayList<Marker>>> {
+    private class CheckMarkersTask extends AsyncTask<HashMap<Marker, Point>, Void, HashMap<Point,
+            ArrayList<Marker>>> {
 
 
         private double findDistance(float x1, float y1, float x2, float y2) {
@@ -582,7 +595,9 @@ public class MainActivity extends FragmentActivity implements
         }
 
         @Override
-        protected HashMap<Point, ArrayList<Marker>> doInBackground(HashMap<Marker, Point>... params) {
+        protected HashMap<Point, ArrayList<Marker>>
+                    doInBackground(HashMap<Marker, Point>... params) {
+
             HashMap<Point, ArrayList<Marker>> clusters = new HashMap<Point, ArrayList<Marker>>();
             HashMap<Marker, Point> points = params[0];
             boolean wasClustered;
