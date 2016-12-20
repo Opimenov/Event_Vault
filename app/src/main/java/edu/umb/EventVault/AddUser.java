@@ -49,7 +49,7 @@ public class AddUser extends AppCompatActivity {
                         Connection con = DriverManager.getConnection(url, user, pass);
                         Statement st = con.createStatement();
                         // find password with entered username
-                        String insert_user = "INSERT INTO umboston`.users (name, password) VALUES ('"+uname+"','"+upass+"')";
+                        String insert_user = "INSERT INTO `umboston`.users (name, password) VALUES ('"+uname+"','"+upass+"')";
                         Log.i(DEBUG_TAG, "Insert line: " + insert_user);
                         st.executeUpdate(insert_user);
                         con.close();
