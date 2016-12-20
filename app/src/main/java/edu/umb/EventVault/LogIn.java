@@ -2,14 +2,10 @@ package edu.umb.EventVault;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
@@ -68,6 +64,7 @@ public class LogIn extends Activity {
                             gv.setUserPassword(rs.getString(1));
                         }
                         if(upass.equals(gv.getUserPassword())) {
+                            gv.setLoggedIn(true);
                             gv.setUserName(uname);
                             Intent intent = new Intent(LogIn.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

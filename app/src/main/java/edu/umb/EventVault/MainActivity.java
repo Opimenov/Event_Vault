@@ -56,7 +56,6 @@ import static edu.umb.EventVault.R.id.rough_spinner;
 public class MainActivity extends FragmentActivity implements
         OnMapReadyCallback {
     //  GoogleMap.OnMarkerClickListener add this in case we want custom marker click event\
-    private boolean loggedIN = false;
     private EditText mEditText;   //gets user input
     private ImageButton mSearchButton;   //start the search
 	private final static String DEBUG_TAG="OP";
@@ -79,6 +78,9 @@ public class MainActivity extends FragmentActivity implements
     private static final String url = "jdbc:mysql://85.10.205.173:3306/umboston";
     private static final String user = "cs443";
     private static final String pass = "cs443-2016";
+
+    /** singleton logIN info class */
+    private GlobalVariables mGlobalVars = GlobalVariables.getInstance();
 
     /** marker clustering */
     private Bitmap greenmarkerImage, redmarkerImage;
@@ -509,7 +511,7 @@ public class MainActivity extends FragmentActivity implements
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
 
-        if (loggedIN)
+        if (mGlobalVars.isLoggedIn())
             inflater.inflate(R.menu.main_logged_in, popupMenu.getMenu());
         else
             inflater.inflate(R.menu.main_logged_off, popupMenu.getMenu());
@@ -532,7 +534,6 @@ public class MainActivity extends FragmentActivity implements
                         startAddActivity(view);
                         return true;
                     case R.id.action_login:
-                        loggedIN = true;
                         startLogIn(view);
                         return true;
                 }

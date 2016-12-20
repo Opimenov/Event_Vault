@@ -1,7 +1,5 @@
 package edu.umb.EventVault;
 
-import android.app.Application;
-
 /**
  * Created by Olga on 18.12.2016.
  */
@@ -9,6 +7,16 @@ import android.app.Application;
 public class GlobalVariables{
 
     private static GlobalVariables instance;
+
+    private boolean loggedIn = false;
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
     private String userName = null;
     private String userPassword = null;
